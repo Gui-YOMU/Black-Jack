@@ -26,6 +26,41 @@ header {
             object-fit: contain;
         }
     }
+
+    @media screen and (max-width: 1000px) {
+        h1 {
+            font-size: 40px;
+        }
+
+        div.logo-container {
+            width: 100px;
+            height: 100px;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
+    }
+
+    @media screen and (max-width: 540px) {
+        h1 {
+            font-size: 25px;
+        }
+
+        div.logo-container {
+            width: 70px;
+            height: 70px;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
+    }
+
 }
 
 section#rules {
@@ -76,6 +111,36 @@ section#rules {
         font-size: 30px;
         border-radius: 10px;
         padding: 10px;
+    }
+
+    @media screen and (max-width: 1600px) {
+        gap: 20px;
+        margin-top: 30px;
+
+        h2 {
+            font-size: 40px;
+        }
+
+        h3 {
+            font-size: 30px;
+        }
+
+        form {
+            gap: 15px;
+        }
+
+        p,
+        form label {
+            font-size: 15px;
+        }
+
+        form input {
+            font-size: 15px;
+        }
+
+        button {
+            font-size: 20px;
+        }
     }
 }
 
@@ -155,6 +220,45 @@ div#game {
             background-color: lightcoral;
         }
     }
+
+    @media screen and (max-width: 1600px) {
+        gap: 20px;
+        padding: 20px;
+
+        p {
+            font-size: 30px;
+        }
+
+        div.displays {
+            gap: 10px;
+        }
+
+        div.scores {
+            font-size: 20px;
+            width: 35px;
+            height: 35px;
+        }
+
+        div.cards-container {
+            gap: 5px;
+        }
+
+        div.card {
+            width: 75px;
+            height: 90px;
+            font-size: 20px;
+        }
+
+        div#buttonsDisplay {
+            gap: 20px;
+
+            button {
+                font-size: 20px;
+                width: 50%;
+                height: 75px;
+            }
+        }
+    }
 }
 
 dialog {
@@ -196,6 +300,68 @@ dialog {
 
         button#quit:hover {
             background-color: red;
+        }
+    }
+
+    @media screen and (max-width: 1600px) {
+        width: 40%;
+        padding: 20px;
+
+        h3 {
+            font-size: 30px;
+        }
+
+        p {
+            font-size: 20px;
+        }
+
+        div {
+            gap: 50px;
+
+            button {
+                font-size: 20px;
+            }
+        }
+    }
+
+    @media screen and (max-width: 1000px) {
+        h3 {
+            font-size: 25px;
+        }
+
+        div {
+            gap: 30px;
+
+            button {
+                font-size: 15px;
+            }
+        }
+    }
+
+    @media screen and (max-width: 720px) {
+        h3 {
+            font-size: 20px;
+        }
+
+        p {
+            font-size: 15px;
+        }
+
+        div {
+            gap: 20px;
+
+            button {
+                width: 40%;
+                font-size: 15px;
+            }
+        }
+    }
+
+    @media screen and (max-width: 540px) {
+        div {
+            button {
+                font-size: 10px;
+            }
         }
     }
 }
