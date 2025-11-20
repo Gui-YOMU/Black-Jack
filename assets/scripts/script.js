@@ -1,3 +1,5 @@
+// Constructeur de cartes
+
 class Card {
     constructor(symbol, color, value) {
         this.symbol = symbol,
@@ -6,8 +8,12 @@ class Card {
     }
 }
 
+// Récupération des fichiers sonores
+
 let gameAudio = new Audio("../assets/sounds/gameAudio.mp3")
 let drawCardAudio = new Audio("../assets/sounds/card-draw.mp3")
+
+// Récupération des objets du DOM
 
 let rulesDisplay = document.querySelector("#rules")
 let playerName = document.querySelector("#playerName")
@@ -24,6 +30,8 @@ let endDisplay = document.querySelector("#endDisplay")
 let winOrLose = document.querySelector("#winOrLose")
 let finalScore = document.querySelector("#finalScore")
 
+// Création des variables
+
 let cardValueArray = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
 let cardColorArray = ["♠", "♡", "♣", "♢"]
 let orderedCardDeck = []
@@ -35,6 +43,10 @@ let bankScore = 0
 let deckIndex = 0
 let card
 let blackJack
+
+// Création des fonctions
+
+// Construction du deck de cartes dans l'ordre
 
 function createDeck() {
     let newCard
@@ -54,6 +66,8 @@ function createDeck() {
     }
 }
 
+// Mélange du deck de cartes
+
 function shuffleDeck(deck) {
     let random = 0
     while (deck.length > 0) {
@@ -62,6 +76,8 @@ function shuffleDeck(deck) {
         deck.splice(random, 1)
     }
 }
+
+// Distribution des deux premières cartes au joueur et à la banque avec vérification d'un éventuel blackjack
 
 function dealCards(deck) {
     for (let i = 0; i < 4; i++) {
@@ -109,12 +125,14 @@ function dealCards(deck) {
     if (playerScore == 21) {
         endGame()
     } else if (playerScore > 21) {
-        playerAceCounter--
+        playerAceCounter--  // Décompte de la valeur de l'as à 1 si besoin
         playerScore -= 10
         playerScoreDisplay.textContent = `${playerScore}`
     }
     blackJack = false
 }
+
+// Pioche d'une carte
 
 function drawCard(deck) {
     drawCardAudio.play()
@@ -138,52 +156,14 @@ function drawCard(deck) {
     return card
 }
 
-document.querySelector("#start").addEventListener("click", () => {
-    rulesDisplay.style.display = "none"
-    gameDisplay.style.display = "flex"
-    gameAudio.play()
-    playerNameDisplay.textContent = playerName.value
-    createDeck()
-    shuffleDeck(orderedCardDeck)
-    dealCards(shuffledCardDeck)
-})
-
-document.querySelector("#draw").addEventListener("click", () => {
-    drawCard(shuffledCardDeck)
-    playerCardsDisplay.appendChild(card)
-    playerScore += shuffledCardDeck[deckIndex].value
-    if (shuffledCardDeck[deckIndex].value == 11) {
-        playerAceCounter++
-    }
-    playerScoreDisplay.textContent = `${playerScore}`
-    if (playerScore > 21) {
-        if (playerAceCounter > 0) {
-            playerAceCounter--
-            playerScore -= 10
-            playerScoreDisplay.textContent = `${playerScore}`
-        } else {
-            endGame()
-        }
-    }
-    deckIndex++
-})
-
-gameAudio.addEventListener("ended", function () {
-    this.currentTime = 0
-    this.play()
-}, false)
-
-document.querySelector("#stay").addEventListener("click", () => {
-    buttonsDisplay.style.visibility = "hidden"
-    bankDraw()
-})
+// Pioche de la banque jusqu'à atteindre ou dépasser 21
 
 function bankDraw() {
     document.querySelector(".hidden").textContent = `${shuffledCardDeck[3].symbol} ${shuffledCardDeck[3].color}`
     bankScore += shuffledCardDeck[3].value
     bankScoreDisplay.textContent = `${bankScore}`
     if (bankScore > 21) {
-        bankAceCounter--
+        bankAceCounter--   // Décompte de la valeur de l'as à 1 si besoin
         bankScore -= 10
         bankScoreDisplay.textContent = `${bankScore}`
     } else if (bankScore == 21) {
@@ -211,6 +191,8 @@ function bankDraw() {
     }
     endGame()
 }
+
+// Vérification des conditions de fin de partie
 
 function endGame() {
     if (blackJack) {
@@ -263,6 +245,51 @@ function endGame() {
         }
     }
 }
+
+// Mise en boucle de la musique de fond
+
+gameAudio.addEventListener("ended", function () {
+    this.currentTime = 0
+    this.play()
+}, false)
+
+// Attribution des fonctions aux différents boutons
+
+document.querySelector("#start").addEventListener("click", () => {
+    rulesDisplay.style.display = "none"
+    gameDisplay.style.display = "flex"
+    gameAudio.play()
+    playerNameDisplay.textContent = playerName.value
+    createDeck()
+    shuffleDeck(orderedCardDeck)
+    dealCards(shuffledCardDeck)
+})
+
+document.querySelector("#draw").addEventListener("click", () => {
+    drawCard(shuffledCardDeck)
+    playerCardsDisplay.appendChild(card)
+    playerScore += shuffledCardDeck[deckIndex].value
+    if (shuffledCardDeck[deckIndex].value == 11) {
+        playerAceCounter++
+    }
+    playerScoreDisplay.textContent = `${playerScore}`
+    if (playerScore > 21) {
+        if (playerAceCounter > 0) {
+            playerAceCounter--
+            playerScore -= 10
+            playerScoreDisplay.textContent = `${playerScore}`
+        } else {
+            endGame()
+        }
+    }
+    deckIndex++
+})
+
+document.querySelector("#stay").addEventListener("click", () => {
+    buttonsDisplay.style.visibility = "hidden"
+    bankDraw()
+})
+
 
 document.querySelector("#restart").addEventListener("click", () => {
     playerCardsDisplay.replaceChildren()
